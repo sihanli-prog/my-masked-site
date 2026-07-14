@@ -1,108 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klas</title>
+    
+    <link rel="icon" type="image/png" href="https://naas.ai">
+    <link rel="shortcut icon" type="image/png" href="https://naas.ai">
+    
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0f19;
-            color: #ffffff;
+        html, body {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        header {
             width: 100%;
-            padding: 20px;
-            background-color: #111827;
-            text-align: center;
-            border-bottom: 2px solid #1f2937;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000000;
         }
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: #3b82f6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            text-align: center;
-        }
-        .description {
-            color: #9ca3af;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-        .game-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .game-card {
-            background-color: #1f2937;
-            border: 1px solid #374151;
-            border-radius: 12px;
-            padding: 25px;
-            width: 260px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: #3b82f6;
-        }
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        .game-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .launch-btn {
-            display: inline-block;
-            background-color: #2563eb;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-        .launch-btn:hover {
-            background-color: #1d4ed8;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>KLAS</h1>
-    </header>
-
-    <div class="container">
-        <p class="description">Welcome to the clean, ad-free gaming launch portal.</p>
-        
-        <div class="game-grid">
-            <div class="game-card">
-                <div class="game-icon">🎮</div>
-                <div class="game-title">Roblox Cloud</div>
-                <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 20px;">
-                    Launch the game application interface cleanly.
-                </p>
-                <a href="https://web.cloudmoonapp.com/game/com.roblox.client/" target="_blank" class="launch-btn">Play Now</a>
-            </div>
-        </div>
-    </div>
-
+    <!-- Dit stuurt CloudMoon door een gratis webproxy die probeert advertenties te filteren -->
+    <iframe src="https://vulcan.net"></iframe>
 </body>
 </html>
+<iframe src="cloudmoonapp.com"></iframe>
