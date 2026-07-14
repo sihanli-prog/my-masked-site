@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klas</title>
     
-    <!-- Het Spellingoefenen logo voor je tabblad -->
     <link rel="icon" type="image/png" href="https://naas.ai">
     <link rel="shortcut icon" type="image/png" href="https://naas.ai">
     
@@ -16,18 +15,20 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #000000; /* Maakt eventuele randen zwart */
+            background-color: #000000;
         }
+        /* Dit zoomt in op het middelste gedeelte en snijdt de witte advertenties aan de zijkant weg */
         iframe {
-            width: 100%;
-            height: 100%;
+            width: 130%;
+            height: 120%;
             border: none;
-            display: block;
+            position: absolute;
+            top: -10%;
+            left: -15%;
         }
     </style>
 </head>
 <body>
-    <!-- Dit laadt jouw Roblox CloudMoon sessie direct over het HELE scherm -->
     <iframe src="https://cloudmoonapp.com"></iframe>
 </body>
 </html>
