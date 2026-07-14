@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klas</title>
+    <link rel="icon" type="image/png" href="https://naas.ai">
+    <style>
+        /* Modern reset and deep cyber dark theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #080c14;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* Modern Glassmorphic Top Bar Navigation */
+        .navbar {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 8px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 40px;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* Auto-hide feature: hovers back into view when mouse approaches top */
+        body:hover .navbar {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Elegant Site Branding */
+        .brand {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-right: 10px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Nav Control Buttons & Game Selectors */
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #b5c2d5;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        /* Active Tab Highlight Styling */
+        .nav-btn.active {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Utility Utilities (Panic Button) */
+        .btn-panic {
+            background: rgba(255, 65, 108, 0.1);
+            color: #ff416c;
+            border: 1px solid rgba(255, 65, 108, 0.2);
+        }
+        .btn-panic:hover {
+            background: #ff416c;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        /* Fullscreen Viewport Setup */
+        .viewport-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            display: none; /* Controlled via JavaScript */
+            background-color: transparent;
+        }
+
+        iframe.active-frame {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modern Translucent Navigation Hub -->
+    <div class="navbar" id="navBar">
+        <div class="brand">Klas</div>
+        
+        <!-- Game Toggle Switchers -->
+        <button class="nav-btn active" id="btnCloudMoon" onclick="switchTab('cloudmoon')">☁️ CloudMoon</button>
+        <button class="nav-btn" id="btnRoblox" onclick="switchTab('roblox')">🎮 Roblox</button>
+        
+        <!-- Utility Actions -->
+        <button class="nav-btn" onclick="refreshCurrentFrame()">🔄 Refresh</button>
+        <button class="nav-btn btn-panic" onclick="triggerPanic()">📚 Math Notes</button>
+    </div>
+
+    <!-- Main Dynamic Frame Engine -->
+    <div class="viewport-container">
+        <!-- CloudMoon Source Proxy Entry -->
+        <iframe id="frameCloudMoon" class="active-frame" src="https://vulcan.net" allow="autoplay; gamepad; fullscreen"></iframe>
+        
+        <!-- Roblox Dedicated Native Cloud Link via Proxy -->
+        <iframe id="frameRoblox" src="https://vulcan.net" allow="autoplay; gamepad; fullscreen"></iframe>
+    </div>
+
+    <script>
+        const frameCloudMoon = document.getElementById('frameCloudMoon');
+        const frameRoblox = document.getElementById('frameRoblox');
+        const btnCloudMoon = document.getElementById('btnCloudMoon');
+        const btnRoblox = document.getElementById('btnRoblox');
+        const navBar = document.getElementById('navBar');
+
+        let currentActiveTab = 'cloudmoon';
+
+        // 1. Core Tab Switching Logic
+        function switchTab(target) {
+            currentActiveTab = target;
+            
+            // Remove active classes
+            btnCloudMoon.classList.remove('active');
+            btnRoblox.classList.remove('active');
+            frameCloudMoon.classList.remove('active-frame');
+            frameRoblox.classList.remove('active-frame');
+
+            // Apply active status to selected game
+            if (target === 'cloudmoon') {
+                btnCloudMoon.classList.add('active');
+                frameCloudMoon.classList.add('active-frame');
+            } else if (target === 'roblox') {
+                btnRoblox.classList.add('active');
+                frameRoblox.classList.add('active-frame');
+            }
+        }
+
+        // 2. Anti-Lag Refresh Function
+        function refreshCurrentFrame() {
+            if (currentActiveTab === 'cloudmoon') {
+                frameCloudMoon.src = frameCloudMoon.src;
+            } else {
+                frameRoblox.src = frameRoblox.src;
+            }
+        }
+
+        // 3. Stealth Emergency Routine (Disguises the website instantly)
+        function triggerPanic() {
+            navBar.style.display = 'none';
+            document.title = "Google Docs - Algebra Notes";
+            document.querySelector("link[rel*='icon']").href = "https://gstatic.com";
+            
+            // Re-route the active frame directly into a school document template
+            const targetFrame = currentActiveTab === 'cloudmoon' ? frameCloudMoon : frameRoblox;
+            targetFrame.src = "https://google.com";
+        }
+
+        // Quick Command: Double Tap 'Escape' key anywhere on screen to execute panic mode
+        let escapeKeyPressCounter = 0;
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                escapeKeyPressCounter++;
+                if (escapeKeyPressCounter >= 2) {
+                    triggerPanic();
+                }
+                setTimeout(() => { escapeKeyPressCounter = 0; }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
