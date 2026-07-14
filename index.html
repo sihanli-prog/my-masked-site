@@ -5,122 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klas</title>
     
-    <!-- Tab Icons -->
+    <!-- Het Spellingoefenen logo voor je tabblad -->
     <link rel="icon" type="image/png" href="https://naas.ai">
     <link rel="shortcut icon" type="image/png" href="https://naas.ai">
     
-    <!-- FREE AD-BLOCKING INJECTION SCRIPT -->
-    <script src="https://jsdelivr.net" crossorigin="anonymous"></script>
-    <script>
-        // Intercepts and hides common ad containers from loading inside the screen
-        document.addEventListener("DOMContentLoaded", function() {
-            const adSelectors = [
-                'iframe[src*="googleads"]', 'iframe[src*="doubleclick"]', 
-                '.adsbygoogle', '#ad-container', '.ad-box', '[id^="div-gpt-ad"]'
-            ];
-            setInterval(() => {
-                adSelectors.forEach(selector => {
-                    document.querySelectorAll(selector).forEach(el => el.remove());
-                });
-            }, 1000);
-        });
-    </script>
-
     <style>
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
-            text-align: center;
             overflow: hidden;
-        }
-        h1 { padding-top: 20px; font-size: 24px; color: #4CAF50; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .game-card {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid #333;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .game-card:hover {
-            border-color: #4CAF50;
-            background: #333;
+            background-color: #000000; /* Maakt eventuele randen zwart */
         }
         iframe {
-            display: none;
             width: 100%;
             height: 100%;
             border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: black;
-        }
-        .back-btn {
-            display: none;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 9999;
-            background: #ff5555;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
+            display: block;
         }
     </style>
 </head>
 <body>
-
-    <button id="backBtn" class="back-btn" onclick="closeGame()">⬅ Terug naar Menu</button>
-
-    <div id="menu">
-        <h1>School Portal - Groep 8 Spellen</h1>
-        <div class="grid">
-            <div class="game-card" onclick="playGame('https://sfcave.com')">
-                <h3>Super Mario</h3>
-            </div>
-            <div class="game-card" onclick="playGame('https://playlucas.com')">
-                <h3>Sonic Retro</h3>
-            </div>
-            <div class="game-card" onclick="playGame('https://pacman.live')">
-                <h3>Pac-Man</h3>
-            </div>
-        </div>
-    </div>
-
-    <iframe id="gameFrame" src=""></iframe>
-
-    <script>
-        function playGame(url) {
-            document.getElementById('menu').style.display = 'none';
-            var frame = document.getElementById('gameFrame');
-            frame.src = url;
-            frame.style.display = 'block';
-            document.getElementById('backBtn').style.display = 'block';
-        }
-        function closeGame() {
-            var frame = document.getElementById('gameFrame');
-            frame.src = '';
-            frame.style.display = 'none';
-            document.getElementById('menu').style.display = 'block';
-            document.getElementById('backBtn').style.none = 'none';
-        }
-    </script>
+    <!-- Dit laadt jouw Roblox CloudMoon sessie direct over het HELE scherm -->
+    <iframe src="https://cloudmoonapp.com"></iframe>
 </body>
 </html>
