@@ -17,19 +17,16 @@
             overflow: hidden;
             background-color: #000000;
         }
-        /* Dit zoomt in op het middelste gedeelte en snijdt de witte advertenties aan de zijkant weg */
         iframe {
-            width: 130%;
-            height: 120%;
+            width: 100%;
+            height: 100%;
             border: none;
-            position: absolute;
-            top: -10%;
-            left: -15%;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <iframe src="https://cloudmoonapp.com"></iframe>
+    <!-- Dit stuurt CloudMoon door een gratis webproxy die probeert advertenties te filteren -->
+    <iframe src="https://vulcan.net"></iframe>
 </body>
 </html>
-<iframe src="https://adguard-dns.com"></iframe>
