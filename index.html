@@ -44,9 +44,9 @@
     </header>
 
     <div id="core-viewport">
-        <!-- New working direct deployment link that works everywhere -->
+        <!-- Secure deployment URL with no cross-origin headers -->
         <iframe id="game-engine-frame" 
-                src="https://games.ovh" 
+                src="https://easyfun.gg" 
                 allow="autoplay; gamepad; fullscreen;">
         </iframe>
     </div>
@@ -63,7 +63,7 @@
             if (!frame) return;
 
             if (gameKey === 'roblox') {
-                frame.src = "https://games.ovh";
+                frame.src = "https://easyfun.gg";
                 document.getElementById('btn-roblox').classList.add('active-game');
             } else if (gameKey === 'minecraft') {
                 frame.src = "https://pages.dev"; 
@@ -72,7 +72,6 @@
                 frame.src = "https://retrogames.cc";
                 document.getElementById('btn-retro').classList.add('active-game');
             } else if (gameKey === 'slope') {
-                // Direct embed code link for Slope that completely avoids Google servers
                 frame.src = "https://kbhgames.com";
                 document.getElementById('btn-slope').classList.add('active-game');
             }
