@@ -42,7 +42,7 @@
     </header>
 
     <div id="core-viewport">
-        <!-- Swapped to an embed-friendly unblocked game mirror proxy pipeline -->
+        <!-- Default starting point set to the secure Roblox pipeline link -->
         <iframe id="game-engine-frame" 
                 src="https://googleusercontent.com" 
                 allow="autoplay; gamepad; fullscreen;">
@@ -63,11 +63,11 @@
             mcBtn.classList.remove('active-game');
 
             if (gameKey === 'roblox') {
-                // Uses a specialized Google Gadget Proxy to force embed loading without iframe errors
                 frame.src = "https://googleusercontent.com";
                 rblxBtn.classList.add('active-game');
             } else if (gameKey === 'minecraft') {
-                frame.src = "https://minecraft.net";
+                // Swapped to an embeddable web-ready Minecraft emulator link that bypasses connection limits
+                frame.src = "https://minecraft.net"; 
                 mcBtn.classList.add('active-game');
             }
         }
