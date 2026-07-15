@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Sets the tab title to klas for everyone -->
     <title>klas</title>
     <style>
         * {
@@ -15,150 +14,76 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #0d0d12;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0c0c0f;
+            font-family: system-ui, -apple-system, sans-serif;
         }
-        /* The main unblocked game window container */
-        #game-wrapper {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #000;
-        }
-        /* Top Navigation Header for everyone to control the game */
-        #klas-nav {
+        #nav-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(15, 15, 20, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 15, 20, 0.8);
+            backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 24px;
+            padding: 12px 24px;
             z-index: 99999;
-            transition: transform 0.3s ease;
         }
-        #klas-nav.hidden {
-            transform: translateY(-100%);
-        }
-        .brand-title {
+        .title {
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 16px;
+            font-weight: bold;
         }
-        .button-group {
-            display: flex;
-            gap: 12px;
-        }
-        /* Modern Glassmorphic Action Buttons */
         .modern-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             padding: 8px 16px;
             font-size: 13px;
             font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            transition: 0.2s ease;
         }
         .modern-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
         }
-        /* Floating toggle button when menu is hidden */
-        #menu-toggle {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 100000;
-            background: rgba(20, 20, 25, 0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding-top: 50px;
         }
     </style>
 </head>
 <body>
 
-    <button id="menu-toggle" onclick="toggleNav()">☰</button>
-
-    <!-- Top Menu Layout -->
-    <header id="klas-nav">
-        <div class="brand-title">klas client v2.0</div>
-        <div class="button-group">
-            <button class="modern-btn" onclick="cleanAds()">🧹 Force Clear Ads</button>
-            <button class="modern-btn" onclick="goFullscreen()">🖥️ Fullscreen Roblox</button>
-        </div>
-    </header>
-
-    <!-- Embedded Secure Mirror Gateway -->
-    <div id="game-wrapper">
-        <!-- Automatically proxies CloudMoon platform layout -->
-        <iframe id="cloudmoon-frame" src="https://cloudmoonapp.com" allow="autoplay; gamepad; fullscreen;"></iframe>
+    <div id="nav-bar">
+        <div class="title">klas client</div>
+        <button class="modern-btn" onclick="makeFullscreen()">🖥️ Fullscreen Game</button>
     </div>
 
+    <!-- Proxy Frame that runs CloudMoon inside your GitHub link -->
+    <iframe id="game-frame" src="https://cloudmoonapp.com" allow="autoplay; gamepad; fullscreen;"></iframe>
+
     <script>
-        // 1. Permanently enforce the tab name to 'klas' for all visitors
+        // Forces browser tab to say klas for anyone who opens it
         document.title = "klas";
         setInterval(() => {
             if (document.title !== "klas") document.title = "klas";
-        }, 200);
+        }, 250);
 
-        // 2. Navigation bar visibility toggle
-        function toggleNav() {
-            const nav = document.getElementById('klas-nav');
-            nav.classList.toggle('hidden');
-        }
-
-        // 3. Fullscreen deployment for smooth web play
-        function goFullscreen() {
-            const frame = document.getElementById('cloudmoon-frame');
-            if (frame) {
-                frame.requestFullscreen().catch(err => {
-                    console.log("Fullscreen request handled: " + err.message);
-                });
+        function makeFullscreen() {
+            const frame = document.getElementById('game-frame');
+            if (frame.requestFullscreen) {
+                frame.requestFullscreen();
             }
         }
 
-        // 4. Client-side cloud container ad removal script
-        function cleanAds() {
-            const frame = document.getElementById('cloudmoon-frame');
-            try {
-                // Attempts cleaning loop if cross-origin policy permits local session storage elements
-                const doc = frame.contentDocument || frame.contentWindow.document;
-                const badElements = doc.querySelectorAll('[class*="ad-"], [id*="ad-"], iframe[src*="ads"], .ad-container, .video-ad');
-                badElements.forEach(el => el.remove());
-            } catch (e) {
-                console.log("Anti-ad automation sequence applied to network proxy stream layer.");
-            }
-        }
-
-        // 5. Anti-Exit Redirect Shield to trap Roblox instances in frame
-        window.onbeforeunload = function() {
-            return "Do you want to close your klas session?";
-        };
+        // Prevent accidental page closes or tab redirection kicks
+        window.onbeforeunload = function() { return true; };
     </script>
 </body>
 </html>
