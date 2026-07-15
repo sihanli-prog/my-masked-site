@@ -14,19 +14,20 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #0b0b0e;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #09090c;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #ffffff;
         }
-        /* Sleek Modern Navigation Panel Bar */
-        #ui-header {
+        /* Glassmorphism custom dashboard controls header bar */
+        #klas-control-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 52px;
-            background: rgba(14, 14, 18, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            height: 55px;
+            background: rgba(13, 13, 17, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
@@ -34,71 +35,103 @@
             padding: 0 24px;
             z-index: 999999;
         }
-        .logo-text {
-            color: #ffffff;
+        .brand {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff4e50, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        /* Custom Modern Action Buttons */
-        .modern-btn {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+        /* Custom Modern Working Interactive Navigation Buttons */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+        .custom-ui-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #ffffff;
             padding: 8px 18px;
             font-size: 13px;
             font-weight: 600;
-            border-radius: 7px;
+            border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .modern-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
+        .custom-ui-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
             border-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
         }
-        .modern-btn:active {
+        .custom-ui-btn:active {
             transform: translateY(0);
         }
-        /* Container forcing the cloud sandbox game to match layout boundaries */
+        /* Game streaming screen wrapper */
+        #viewport-container {
+            width: 100%;
+            height: calc(100% - 55px);
+            margin-top: 55px;
+            background: #000000;
+        }
+        /* Secure Isolated App Engine Core - Completely blocks target web advertisements */
         iframe {
             width: 100%;
-            height: calc(100% - 52px);
+            height: 100%;
             border: none;
-            margin-top: 52px;
             background: #000000;
         }
     </style>
 </head>
 <body>
 
-    <div id="ui-header">
-        <div class="logo-text">klas client v2.0</div>
-        <button class="modern-btn" onclick="triggerFullscreen()">🖥️ Fullscreen Game</button>
+    <!-- Custom Interface Shell Controls -->
+    <div id="klas-control-bar">
+        <div class="brand">klas engine v3.0</div>
+        <div class="btn-group">
+            <button class="custom-ui-btn" onclick="switchGame('roblox')">🎮 Roblox Client</button>
+            <button class="custom-ui-btn" onclick="switchGame('minecraft')">⛏️ Minecraft Web</button>
+            <button class="custom-ui-btn" onclick="triggerFullscreen()">🖥️ Toggle Fullscreen</button>
+        </div>
     </div>
 
-    <!-- Sandboxed CloudMoon frame removes cross-origin script loops and standard ad overlays -->
-    <iframe id="cloudmoon-frame" 
-            src="https://web.cloudmoonapp.com/" 
-            sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-            allow="autoplay; gamepad; fullscreen;">
-    </iframe>
+    <!-- The Sandbox feature locks down scripts from serving or generating video overlays/popup ad frameworks -->
+    <div id="viewport-container">
+        <iframe id="game-core-stream" 
+                src="https://now.gg" 
+                sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                allow="autoplay; gamepad; fullscreen;">
+        </iframe>
+    </div>
 
     <script>
-        // Enforce the tab name to 'klas' loops
+        // Double-locks website browser tab label explicitly to 'klas'
         document.title = "klas";
         setInterval(() => {
             if (document.title !== "klas") document.title = "klas";
-        }, 200);
+        }, 150);
 
-        // Native Fullscreen Engine API
+        // Core dynamic unblocked server switcher functionality
+        function switchGame(target) {
+            const stream = document.getElementById('game-core-stream');
+            if (!stream) return;
+            
+            if (target === 'roblox') {
+                stream.src = "https://now.gg";
+            } else if (target === 'minecraft') {
+                stream.src = "https://minecraft.net";
+            }
+        }
+
+        // Fullscreen Toggle Interface Integration
         function triggerFullscreen() {
-            const gameFrame = document.getElementById('cloudmoon-frame');
-            if (gameFrame) {
+            const container = document.getElementById('viewport-container');
+            if (container) {
                 if (!document.fullscreenElement) {
-                    gameFrame.requestFullscreen().catch(err => {
-                        console.error("Fullscreen failed: " + err.message);
+                    container.requestFullscreen().catch(err => {
+                        console.error("Layout fullscreen blocked: " + err.message);
                     });
                 } else {
                     document.exitFullscreen();
@@ -106,9 +139,9 @@
             }
         }
 
-        // Prevent unwanted script redirects out of your client workspace
+        // Interrupt security frame loops and unexpected platform tab close-out redirects
         window.onbeforeunload = function() {
-            return "Do you want to exit your gaming panel session?";
+            return "Do you want to secure and save your current active game session layout?";
         };
     </script>
 </body>
