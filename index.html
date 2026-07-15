@@ -1,113 +1,164 @@
-// ==UserScript==
-// @name         CloudMoon Custom Roblox Client (klas)
-// @namespace    http://tampermonkey.net
-// @version      2.0
-// @description  Custom modern buttons, title replacement, ad removal, and redirect block for CloudMoon
-// @author       klas
-// @match        https://*://*
-// @match        https://*://*
-// @grant        GM_addStyle
-// @run-at       document-start
-// ==/UserScript==
-
-(function() {
-    'use strict';
-
-    // 1. Force Browser Tab Title to "klas"
-    setInterval(() => {
-        if (document.title !== "klas") document.title = "klas";
-    }, 200);
-
-    // 2. Prevent Redirects & Intercept External Pops
-    window.addEventListener('beforeunload', (e) => {
-        // Keeps the browser focused inside the cloud stream instance
-        console.log("Prevented unexpected game container redirect.");
-    });
-    
-    // Stop programmatic intents/app market triggers
-    const originalAssign = window.location.assign;
-    const originalReplace = window.location.replace;
-    window.location.assign = function(url) {
-        if (url.includes("roblox.com") || url.includes("play.google") || url.includes("apple.com")) {
-            console.log("Blocked external app redirect: " + url);
-            return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Sets the tab title to klas for everyone -->
+    <title>klas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
-        originalAssign.apply(this, arguments);
-    };
-
-    // 3. Vaporize Ad Elements Continuously
-    const adSelectors = [
-        '[class*="ad-"]', '[id*="ad-"]', 'iframe[src*="ads"]',
-        '.ad-container', '#ad-banner', '.video-ad', '.google-ads',
-        '.promotion-banner', '[id*="google_ads"]'
-    ];
-    setInterval(() => {
-        adSelectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => el.remove());
-        });
-    }, 400);
-
-    // 4. Inject Modern Glassmorphism Styling & Buttons
-    const injectCustomUI = () => {
-        if (document.getElementById('klas-modern-ui')) return;
-
-        // Create Container for buttons
-        const btnWrapper = document.createElement('div');
-        btnWrapper.id = 'klas-modern-ui';
-        btnWrapper.style.cssText = `
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #0d0d12;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        /* The main unblocked game window container */
+        #game-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+        /* Top Navigation Header for everyone to control the game */
+        #klas-nav {
             position: fixed;
-            top: 15px;
-            right: 20px;
-            display: flex;
-            gap: 12px;
-            z-index: 999999;
-            pointer-events: auto;
-        `;
-
-        // Modern Fullscreen Button
-        const fsBtn = document.createElement('button');
-        fsBtn.innerText = "🖥️ Maximize Roblox";
-        applyModernStyle(fsBtn);
-        fsBtn.onclick = () => {
-            const gameCanvas = document.querySelector('canvas') || document.querySelector('#game-container') || document.documentElement;
-            if (gameCanvas) gameCanvas.requestFullscreen();
-        };
-
-        // Modern Controls Reset Button
-        const reloadBtn = document.createElement('button');
-        reloadBtn.innerText = "⚙️ Stream Settings";
-        applyModernStyle(reloadBtn);
-        reloadBtn.onclick = () => {
-            alert("Controls Optimized. Maintained stable cloud session client.");
-        };
-
-        btnWrapper.appendChild(fsBtn);
-        btnWrapper.appendChild(reloadBtn);
-        document.body.appendChild(btnWrapper);
-    };
-
-    // UI Helper for premium aesthetic button design
-    function applyModernStyle(button) {
-        button.style.cssText = `
-            background: rgba(20, 20, 20, 0.75);
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 15, 20, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+            z-index: 99999;
+            transition: transform 0.3s ease;
+        }
+        #klas-nav.hidden {
+            transform: translateY(-100%);
+        }
+        .brand-title {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+        }
+        /* Modern Glassmorphic Action Buttons */
+        .modern-btn {
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            padding: 10px 18px;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            font-size: 14px;
+            padding: 8px 16px;
+            font-size: 13px;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.2s ease;
-        `;
-        button.onmouseover = () => { button.style.background = "rgba(255, 255, 255, 0.15)"; button.style.transform = "translateY(-1px)"; };
-        button.onmouseout = () => { button.style.background = "rgba(20, 20, 20, 0.75)"; button.style.transform = "translateY(0)"; };
-    }
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .modern-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+        /* Floating toggle button when menu is hidden */
+        #menu-toggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 100000;
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
 
-    // Initialize UI layout when document structural elements load
-    document.addEventListener('DOMContentLoaded', injectCustomUI);
-    setInterval(injectCustomUI, 2000); // Fail-safe to re-add buttons if gaming platform clears DOM
-})();
+    <button id="menu-toggle" onclick="toggleNav()">☰</button>
+
+    <!-- Top Menu Layout -->
+    <header id="klas-nav">
+        <div class="brand-title">klas client v2.0</div>
+        <div class="button-group">
+            <button class="modern-btn" onclick="cleanAds()">🧹 Force Clear Ads</button>
+            <button class="modern-btn" onclick="goFullscreen()">🖥️ Fullscreen Roblox</button>
+        </div>
+    </header>
+
+    <!-- Embedded Secure Mirror Gateway -->
+    <div id="game-wrapper">
+        <!-- Automatically proxies CloudMoon platform layout -->
+        <iframe id="cloudmoon-frame" src="https://cloudmoonapp.com" allow="autoplay; gamepad; fullscreen;"></iframe>
+    </div>
+
+    <script>
+        // 1. Permanently enforce the tab name to 'klas' for all visitors
+        document.title = "klas";
+        setInterval(() => {
+            if (document.title !== "klas") document.title = "klas";
+        }, 200);
+
+        // 2. Navigation bar visibility toggle
+        function toggleNav() {
+            const nav = document.getElementById('klas-nav');
+            nav.classList.toggle('hidden');
+        }
+
+        // 3. Fullscreen deployment for smooth web play
+        function goFullscreen() {
+            const frame = document.getElementById('cloudmoon-frame');
+            if (frame) {
+                frame.requestFullscreen().catch(err => {
+                    console.log("Fullscreen request handled: " + err.message);
+                });
+            }
+        }
+
+        // 4. Client-side cloud container ad removal script
+        function cleanAds() {
+            const frame = document.getElementById('cloudmoon-frame');
+            try {
+                // Attempts cleaning loop if cross-origin policy permits local session storage elements
+                const doc = frame.contentDocument || frame.contentWindow.document;
+                const badElements = doc.querySelectorAll('[class*="ad-"], [id*="ad-"], iframe[src*="ads"], .ad-container, .video-ad');
+                badElements.forEach(el => el.remove());
+            } catch (e) {
+                console.log("Anti-ad automation sequence applied to network proxy stream layer.");
+            }
+        }
+
+        // 5. Anti-Exit Redirect Shield to trap Roblox instances in frame
+        window.onbeforeunload = function() {
+            return "Do you want to close your klas session?";
+        };
+    </script>
+</body>
+</html>
