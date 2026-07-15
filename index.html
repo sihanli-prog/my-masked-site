@@ -8,7 +8,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; overflow: hidden; }
         body, html { width: 100%; height: 100%; background-color: #08080b; font-family: sans-serif; color: #ffffff; }
         
-        /* Modern Header Custom Navigation Bar */
         #klas-header {
             position: fixed; top: 0; left: 0; width: 100%; height: 60px;
             background: rgba(12, 12, 16, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -20,8 +19,6 @@
             background: linear-gradient(45deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
-        
-        /* Stylized Action Buttons */
         .action-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff; padding: 8px 14px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s ease;
@@ -29,7 +26,6 @@
         .action-btn:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
         .active-game { background: linear-gradient(135deg, #a855f7, #6366f1) !important; border-color: transparent !important; }
         
-        /* Clean Full Display Screen Container Area */
         #core-viewport { width: 100%; height: calc(100% - 60px); margin-top: 60px; background: #000000; }
         iframe { width: 100%; height: 100%; border: none; background: #000000; }
     </style>
@@ -48,46 +44,40 @@
     </header>
 
     <div id="core-viewport">
-        <!-- Default startup loads the unblocked Google Gadget Proxy network engine directly -->
+        <!-- New working direct deployment link that works everywhere -->
         <iframe id="game-engine-frame" 
-                src="https://googleusercontent.com" 
+                src="https://games.ovh" 
                 allow="autoplay; gamepad; fullscreen;">
         </iframe>
     </div>
 
     <script>
-        // Tab label title lock loops to 'klas'
         document.title = "klas";
         setInterval(() => { if (document.title !== "klas") document.title = "klas"; }, 150);
 
-        // Core dynamic multi-server navigation engine
         function switchStream(gameKey) {
             const frame = document.getElementById('game-engine-frame');
-            
-            // Collect all interactive action nodes
             const buttons = document.querySelectorAll('.btn-container .action-btn');
             buttons.forEach(btn => btn.classList.remove('active-game'));
 
             if (!frame) return;
 
             if (gameKey === 'roblox') {
-                frame.src = "https://googleusercontent.com";
+                frame.src = "https://games.ovh";
                 document.getElementById('btn-roblox').classList.add('active-game');
             } else if (gameKey === 'minecraft') {
                 frame.src = "https://pages.dev"; 
                 document.getElementById('btn-minecraft').classList.add('active-game');
             } else if (gameKey === 'retro') {
-                // Loads a universal emulator archive for hundreds of classic GameBoy/NES/Sega games
                 frame.src = "https://retrogames.cc";
                 document.getElementById('btn-retro').classList.add('active-game');
             } else if (gameKey === 'slope') {
-                // Loads an iframe-allowed high-speed unblocked 3D Slope simulator container link
-                frame.src = "https://googleusercontent.com";
+                // Direct embed code link for Slope that completely avoids Google servers
+                frame.src = "https://kbhgames.com";
                 document.getElementById('btn-slope').classList.add('active-game');
             }
         }
 
-        // Global native full display view toggler API 
         function toggleFullscreen() {
             const targetContainer = document.getElementById('core-viewport');
             if (targetContainer) {
