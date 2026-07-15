@@ -1,173 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klas</title>
-    <link rel="icon" type="image/png" href="https://naas.ai">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #080c14;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        .navbar {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 8px 24px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            z-index: 9999;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        body:hover .navbar {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .brand {
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-right: 10px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #b5c2d5;
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-        .nav-btn.active {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: #000000;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
-        }
-        .btn-panic {
-            background: rgba(255, 65, 108, 0.1);
-            color: #ff416c;
-            border: 1px solid rgba(255, 65, 108, 0.2);
-        }
-        .btn-panic:hover {
-            background: #ff416c;
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
-        }
-        .viewport-container {
-            width: 100%;
-            height: 100%;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            display: none;
-            background-color: transparent;
-        }
-        iframe.active-frame {
-            display: block;
-        }
-    </style>
-</head>
-<body>
+// ==UserScript==
+// @name         CloudMoon Roblox Customizer (klas)
+// @namespace    http://tampermonkey.net
+// @version      1.0
+// @description  Changes title to 'klas', removes ads, and locks Roblox to fullscreen
+// @author       YourName
+// @match        https://*://*
+// @match        https://*://*
+// @grant        none
+// @run-at       document-start
+// ==/UserScript==
 
-    <div class="navbar" id="navBar">
-        <div class="brand">Klas</div>
-        <button class="nav-btn active" id="btnCloudMoon" onclick="switchTab('cloudmoon')">☁️ CloudMoon</button>
-        <button class="nav-btn" id="btnRoblox" onclick="switchTab('roblox')">🎮 Roblox</button>
-        <button class="nav-btn" onclick="refreshCurrentFrame()">🔄 Refresh</button>
-        <button class="nav-btn btn-panic" onclick="triggerPanic()">📚 Math Notes</button>
-    </div>
+(function() {
+    'use strict';
 
-    <div class="viewport-container">
-        <!-- Replaced standard frame URLs with a CORS-bypassing proxy wrapper -->
-        <iframe id="frameCloudMoon" class="active-frame" src="https://allorigins.win" allow="autoplay; gamepad; fullscreen"></iframe>
-        <iframe id="frameRoblox" src="https://allorigins.win" allow="autoplay; gamepad; fullscreen"></iframe>
-    </div>
-
-    <script>
-        const frameCloudMoon = document.getElementById('frameCloudMoon');
-        const frameRoblox = document.getElementById('frameRoblox');
-        const btnCloudMoon = document.getElementById('btnCloudMoon');
-        const btnRoblox = document.getElementById('btnRoblox');
-        const navBar = document.getElementById('navBar');
-        let currentActiveTab = 'cloudmoon';
-
-        function switchTab(target) {
-            currentActiveTab = target;
-            btnCloudMoon.classList.remove('active');
-            btnRoblox.classList.remove('active');
-            frameCloudMoon.classList.remove('active-frame');
-            frameRoblox.classList.remove('active-frame');
-
-            if (target === 'cloudmoon') {
-                btnCloudMoon.classList.add('active');
-                frameCloudMoon.classList.add('active-frame');
-            } else if (target === 'roblox') {
-                btnRoblox.classList.add('active');
-                frameRoblox.classList.add('active-frame');
-            }
+    // 1. Force the title to stay "klas"
+    setInterval(() => {
+        if (document.title !== "klas") {
+            document.title = "klas";
         }
+    }, 200);
 
-        function refreshCurrentFrame() {
-            if (currentActiveTab === 'cloudmoon') {
-                frameCloudMoon.src = frameCloudMoon.src;
-            } else {
-                frameRoblox.src = frameRoblox.src;
-            }
-        }
+    // 2. Clear out ads and promotions
+    const adSelectors = [
+        '[class*="ad-"]', '[id*="ad-"]', 'iframe[src*="ads"]',
+        '.ad-container', '#ad-banner', '.video-ad', '.google-ads'
+    ];
 
-        function triggerPanic() {
-            navBar.style.display = 'none';
-            document.title = "Google Docs - Algebra Notes";
-            document.querySelector("link[rel*='icon']").href = "https://gstatic.com";
-            const targetFrame = currentActiveTab === 'cloudmoon' ? frameCloudMoon : frameRoblox;
-            targetFrame.src = "https://google.com";
-        }
-
-        let escapeKeyPressCounter = 0;
-        window.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                escapeKeyPressCounter++;
-                if (escapeKeyPressCounter >= 2) {
-                    triggerPanic();
-                }
-                setTimeout(() => { escapeKeyPressCounter = 0; }, 1000);
-            }
+    setInterval(() => {
+        adSelectors.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => el.remove());
         });
-    </script>
-</body>
-</html>
+    }, 500);
+
+    // 3. Force Fullscreen on first click inside the page
+    window.addEventListener('click', () => {
+        const gameCanvas = document.querySelector('canvas') || document.querySelector('#game-container') || document.documentElement;
+        
+        if (gameCanvas && !document.fullscreenElement) {
+            gameCanvas.requestFullscreen().catch(err => {
+                console.log("Fullscreen blocked: " + err.message);
+            });
+        }
+    }, { once: true }); // Only runs on the very first click to avoid annoying loops
+})();
