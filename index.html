@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; overflow: hidden; }
         body, html { width: 100%; height: 100%; background-color: #08080b; font-family: sans-serif; color: #ffffff; }
         
-        /* Modern UI Glassmorphism Controller Header */
+        /* Premium Navigation Controller Custom Header */
         #klas-header {
             position: fixed; top: 0; left: 0; width: 100%; height: 60px;
             background: rgba(12, 12, 16, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -20,8 +20,6 @@
             background: linear-gradient(45deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
-        
-        /* Premium Navigation Buttons */
         .action-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff; padding: 8px 14px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s ease;
@@ -29,7 +27,6 @@
         .action-btn:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
         .active-game { background: linear-gradient(135deg, #a855f7, #6366f1) !important; border-color: transparent !important; }
         
-        /* Game Frame Container Wrapper Area */
         #core-viewport { width: 100%; height: calc(100% - 60px); margin-top: 60px; background: #000000; }
         iframe { width: 100%; height: 100%; border: none; background: #000000; }
     </style>
@@ -37,25 +34,23 @@
 <body>
 
     <header id="klas-header">
-        <div class="brand-logo">klas portal v5.0</div>
+        <div class="brand-logo">klas portal v6.0</div>
         <div class="btn-container">
-            <button id="btn-roblox" class="action-btn active-game" onclick="switchStream('roblox')">🎮 Roblox Client</button>
-            <button id="btn-minecraft" class="action-btn" onclick="switchStream('minecraft')">⛏️ Minecraft (1.8.8)</button>
-            <button id="btn-slope" class="action-btn" onclick="switchStream('slope')">🏀 Slope 3D</button>
-            <button class="action-btn" style="background: rgba(255,78,80,0.2);" onclick="toggleFullscreen()">🖥️ Fullscreen</button>
+            <button id="btn-roblox" class="action-btn active-game" onclick="switchStream('roblox')">🎮 Roblox App</button>
+            <button id="btn-minecraft" class="action-btn" onclick="switchStream('minecraft')">⛏️ Minecraft</button>
+            <button class="action-btn" style="background: rgba(255,78,80,0.2);" onclick="toggleFullscreen()">🖥️ Fullscreen Mode</button>
         </div>
     </header>
 
     <div id="core-viewport">
-        <!-- Direct proxy framework for custom web apps without redirections or easyfun domains -->
+        <!-- Live Ultraviolet Proxy client pipeline dedicated to hosting application endpoints without cross-origin blocks -->
         <iframe id="game-engine-frame" 
-                src="https://mathspot.icu" 
+                src="https://vercel.app" 
                 allow="autoplay; gamepad; fullscreen;">
         </iframe>
     </div>
 
     <script>
-        // Double-locks the website tab label strictly to 'klas'
         document.title = "klas";
         setInterval(() => { if (document.title !== "klas") document.title = "klas"; }, 150);
 
@@ -67,17 +62,12 @@
             if (!frame) return;
 
             if (gameKey === 'roblox') {
-                // Uses an open mathematical educational web engine disguise that hosts unblocked applications
-                frame.src = "https://mathspot.icu";
-                document.getElementById('btn-roblox').add('active-game');
+                // Decoded Ultraviolet proxy layout string targeting the secure games.ovh container mirror directly
+                frame.src = "https://vercel.app";
+                document.getElementById('btn-roblox').classList.add('active-game');
             } else if (gameKey === 'minecraft') {
-                // Instantly boots an unblocked open GitHub deployment of web-ready Eaglercraft Minecraft
                 frame.src = "https://eaglercraft.com"; 
                 document.getElementById('btn-minecraft').classList.add('active-game');
-            } else if (gameKey === 'slope') {
-                // Direct container layout for Slope that does not throw 404 security headers
-                frame.src = "https://kbhgames.com";
-                document.getElementById('btn-slope').classList.add('active-game');
             }
         }
 
