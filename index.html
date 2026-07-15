@@ -44,9 +44,9 @@
     </header>
 
     <div id="core-viewport">
-        <!-- Secure deployment URL with no cross-origin headers -->
+        <!-- Default startup layout targeting our updated unblocked Roblox sandbox pipeline -->
         <iframe id="game-engine-frame" 
-                src="https://easyfun.gg" 
+                src="https://games.ovh" 
                 allow="autoplay; gamepad; fullscreen;">
         </iframe>
     </div>
@@ -63,10 +63,11 @@
             if (!frame) return;
 
             if (gameKey === 'roblox') {
-                frame.src = "https://easyfun.gg";
+                frame.src = "https://games.ovh";
                 document.getElementById('btn-roblox').classList.add('active-game');
             } else if (gameKey === 'minecraft') {
-                frame.src = "https://pages.dev"; 
+                // Fixed: Uses an open GitHub deployment of web-ready Eaglercraft Minecraft
+                frame.src = "https://svaaps.github.io/eaglercrafthtml/"; 
                 document.getElementById('btn-minecraft').classList.add('active-game');
             } else if (gameKey === 'retro') {
                 frame.src = "https://retrogames.cc";
