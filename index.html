@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; overflow: hidden; }
         body, html { width: 100%; height: 100%; background-color: #08080b; font-family: sans-serif; color: #ffffff; }
         
-        /* Modern Header Layout without Minecraft */
+        /* Modern Header Layout */
         #klas-header {
             position: fixed; top: 0; left: 0; width: 100%; height: 60px;
             background: rgba(12, 12, 16, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -27,14 +27,30 @@
         .action-btn:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
         .active-game { background: linear-gradient(135deg, #a855f7, #6366f1) !important; border-color: transparent !important; }
         
-        #core-viewport { width: 100%; height: calc(100% - 60px); margin-top: 60px; background: #000000; }
+        /* Main Viewport Container */
+        #core-viewport { 
+            width: 100%; height: calc(100% - 60px); margin-top: 60px; background: #000000; 
+            position: relative; z-index: 1;
+        }
         iframe { width: 100%; height: 100%; border: none; background: #000000; }
+
+        /* Decoy Screen Container Layer */
+        #decoy-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; z-index: 999999; display: none;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Decoy Screen (Fake Google Doc UI) -->
+    <div id="decoy-screen">
+        <iframe src="https://google.com" style="background:#ffffff; width:100%; height:100%;"></iframe>
+    </div>
+
+    <!-- Main Game Portal -->
     <header id="klas-header">
-        <div class="brand-logo">klas portal v6.5</div>
+        <div class="brand-logo">klas portal v8.0</div>
         <div class="btn-container">
             <button id="btn-roblox" class="action-btn active-game" onclick="switchStream('roblox')">🎮 Roblox (CloudMoon)</button>
             <button id="btn-retro" class="action-btn" onclick="switchStream('retro')">🕹️ Retro Hub</button>
@@ -44,7 +60,6 @@
     </header>
 
     <div id="core-viewport">
-        <!-- Starts directly on CloudMoon Roblox with sandbox protection -->
         <iframe id="game-engine-frame" 
                 src="https://cloudmoonapp.com" 
                 sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
@@ -53,8 +68,34 @@
     </div>
 
     <script>
-        document.title = "klas";
-        setInterval(() => { if (document.title !== "klas") document.title = "klas"; }, 150);
+        let isDecoyActive = false;
+        const targetFavicon = "https://gstatic.com";
+        const originalFavicon = document.querySelector("link[rel*='icon']") ? document.querySelector("link[rel*='icon']").href : "";
+
+        // Dynamically handles tab appearance changes
+        function updateTabProperties() {
+            if (isDecoyActive) {
+                document.title = "Class Notes - Google Docs";
+                setFavicon(targetFavicon);
+            } else {
+                document.title = "klas";
+                if (originalFavicon) setFavicon(originalFavicon);
+            }
+        }
+
+        function setFavicon(url) {
+            let link = document.querySelector("link[rel*='icon']");
+            if (!link) {
+                link = document.createElement('link');
+                link.type = 'image/x-icon';
+                link.rel = 'shortcut icon';
+                document.getElementsByTagName('head')[0].appendChild(link);
+            }
+            link.href = url;
+        }
+
+        // Keep running title verification loop
+        setInterval(updateTabProperties, 200);
 
         function switchStream(gameKey) {
             const frame = document.getElementById('game-engine-frame');
@@ -85,6 +126,22 @@
                 }
             }
         }
+
+        // Stealth Panic Key Trigger (Press Escape to drop/raise the document layer)
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const decoy = document.getElementById('decoy-screen');
+                isDecoyActive = !isDecoyActive;
+                
+                if (isDecoyActive) {
+                    decoy.style.display = 'block';
+                } else {
+                    decoy.style.display = 'none';
+                }
+                updateTabProperties();
+            }
+        });
+
         window.onbeforeunload = function() { return true; };
     </script>
 </body>
