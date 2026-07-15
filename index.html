@@ -1,46 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>klas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
-        .brand {
-            font-size: 16px;
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #08080b;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+        }
+        /* Custom Modern Dashboard Menu Header */
+        #klas-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(12, 12, 16, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100000;
+        }
+        .brand-logo {
+            font-size: 18px;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            background: linear-gradient(45deg, #ff4e50, #f9d423);
+            background: linear-gradient(45deg, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Custom Modern Working Interactive Navigation Buttons */
-        .btn-group {
+        /* Style configurations for modern game control panel buttons */
+        .btn-container {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
-        .custom-ui-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            padding: 8px 18px;
+            padding: 8px 16px;
             font-size: 13px;
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
-        .custom-ui-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: rgba(255, 255, 255, 0.25);
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-1px);
         }
-        .custom-ui-btn:active {
-            transform: translateY(0);
+        .active-game {
+            background: linear-gradient(135deg, #a855f7, #6366f1) !important;
+            border-color: transparent !important;
         }
-        /* Game streaming screen wrapper */
-        #viewport-container {
+        /* Full Display Screen Sandbox Space */
+        #core-viewport {
             width: 100%;
-            height: calc(100% - 55px);
-            margin-top: 55px;
+            height: calc(100% - 60px);
+            margin-top: 60px;
             background: #000000;
+            position: relative;
         }
-        /* Secure Isolated App Engine Core - Completely blocks target web advertisements */
+        /* The isolated platform sandbox prevents external ad modules from running */
         iframe {
             width: 100%;
             height: 100%;
@@ -51,19 +88,19 @@
 </head>
 <body>
 
-    <!-- Custom Interface Shell Controls -->
-    <div id="klas-control-bar">
-        <div class="brand">klas engine v3.0</div>
-        <div class="btn-group">
-            <button class="custom-ui-btn" onclick="switchGame('roblox')">🎮 Roblox Client</button>
-            <button class="custom-ui-btn" onclick="switchGame('minecraft')">⛏️ Minecraft Web</button>
-            <button class="custom-ui-btn" onclick="triggerFullscreen()">🖥️ Toggle Fullscreen</button>
+    <!-- Main Navigation Architecture Controls -->
+    <header id="klas-header">
+        <div class="brand-logo">klas portal v4.0</div>
+        <div class="btn-container">
+            <button id="btn-roblox" class="action-btn active-game" onclick="switchStream('roblox')">🎮 Roblox App</button>
+            <button id="btn-minecraft" class="action-btn" onclick="switchStream('minecraft')">⛏️ Minecraft</button>
+            <button class="action-btn" onclick="toggleFullscreen()">🖥️ Fullscreen View</button>
         </div>
-    </div>
+    </header>
 
-    <!-- The Sandbox feature locks down scripts from serving or generating video overlays/popup ad frameworks -->
-    <div id="viewport-container">
-        <iframe id="game-core-stream" 
+    <!-- Sandbox Engine Workspace Box -->
+    <div id="core-viewport">
+        <iframe id="game-engine-frame" 
                 src="https://now.gg" 
                 sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
                 allow="autoplay; gamepad; fullscreen;">
@@ -71,31 +108,40 @@
     </div>
 
     <script>
-        // Double-locks website browser tab label explicitly to 'klas'
+        // Enforces site tab browser label strictly to klas
         document.title = "klas";
         setInterval(() => {
             if (document.title !== "klas") document.title = "klas";
         }, 150);
 
-        // Core dynamic unblocked server switcher functionality
-        function switchGame(target) {
-            const stream = document.getElementById('game-core-stream');
-            if (!stream) return;
+        // Interactive dynamic game switching logic
+        function switchStream(gameKey) {
+            const frame = document.getElementById('game-engine-frame');
+            const rblxBtn = document.getElementById('btn-roblox');
+            const mcBtn = document.getElementById('btn-minecraft');
             
-            if (target === 'roblox') {
-                stream.src = "https://now.gg";
-            } else if (target === 'minecraft') {
-                stream.src = "https://minecraft.net";
+            if (!frame) return;
+
+            // Reset active glowing button styles
+            rblxBtn.classList.remove('active-game');
+            mcBtn.classList.remove('active-game');
+
+            if (gameKey === 'roblox') {
+                frame.src = "https://now.gg";
+                rblxBtn.classList.add('active-game');
+            } else if (gameKey === 'minecraft') {
+                frame.src = "https://minecraft.net";
+                mcBtn.classList.add('active-game');
             }
         }
 
-        // Fullscreen Toggle Interface Integration
-        function triggerFullscreen() {
-            const container = document.getElementById('viewport-container');
-            if (container) {
+        // Fullscreen viewport initialization hook
+        function toggleFullscreen() {
+            const targetContainer = document.getElementById('core-viewport');
+            if (targetContainer) {
                 if (!document.fullscreenElement) {
-                    container.requestFullscreen().catch(err => {
-                        console.error("Layout fullscreen blocked: " + err.message);
+                    targetContainer.requestFullscreen().catch(err => {
+                        console.warn("Fullscreen hook handled: " + err.message);
                     });
                 } else {
                     document.exitFullscreen();
@@ -103,9 +149,9 @@
             }
         }
 
-        // Interrupt security frame loops and unexpected platform tab close-out redirects
+        // Catch app store redirection event requests
         window.onbeforeunload = function() {
-            return "Do you want to secure and save your current active game session layout?";
+            return "Keep active unblocked game frame operational?";
         };
     </script>
 </body>
