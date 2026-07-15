@@ -6,40 +6,46 @@
     <title>klas</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; overflow: hidden; }
-        body, html { width: 100%; height: 100%; background-color: #060608; font-family: sans-serif; }
+        body, html { width: 100%; height: 100%; background-color: #08080b; font-family: sans-serif; color: #ffffff; }
         
-        /* Modern Minimalist Header Bar without Minecraft */
-        #klas-overlay-header {
-            position: fixed; top: 0; left: 0; width: 100%; height: 52px;
-            background: rgba(12, 12, 15, 0.9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        /* Modern Header Layout without Minecraft */
+        #klas-header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            background: rgba(12, 12, 16, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex; justify-content: space-between; align-items: center; padding: 0 24px; z-index: 100000;
         }
-        .header-title {
-            color: #ffffff; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+        .brand-logo {
+            font-size: 18px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+            background: linear-gradient(45deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .control-btn {
-            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #ffffff; padding: 8px 16px; font-size: 12px; font-weight: 600; border-radius: 7px; cursor: pointer; transition: 0.2s ease;
+        .btn-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff; padding: 8px 14px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s ease;
         }
-        .control-btn:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.22); transform: translateY(-1px); }
+        .action-btn:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
+        .active-game { background: linear-gradient(135deg, #a855f7, #6366f1) !important; border-color: transparent !important; }
         
-        /* Fixed Client Area Framework Positioning */
-        #client-viewport { width: 100%; height: calc(100% - 52px); margin-top: 52px; background: #000000; }
+        #core-viewport { width: 100%; height: calc(100% - 60px); margin-top: 60px; background: #000000; }
         iframe { width: 100%; height: 100%; border: none; background: #000000; }
     </style>
 </head>
 <body>
 
-    <!-- Minimal Modern Control Dashboard Custom UI Interface -->
-    <header id="klas-overlay-header">
-        <div class="header-title">klas environment client v6.0</div>
-        <button class="control-btn" onclick="goFullscreen()">🖥️ Fullscreen CloudPlayer</button>
+    <header id="klas-header">
+        <div class="brand-logo">klas portal v6.5</div>
+        <div class="btn-container">
+            <button id="btn-roblox" class="action-btn active-game" onclick="switchStream('roblox')">🎮 Roblox (CloudMoon)</button>
+            <button id="btn-retro" class="action-btn" onclick="switchStream('retro')">🕹️ Retro Hub</button>
+            <button id="btn-slope" class="action-btn" onclick="switchStream('slope')">🏀 Slope Game</button>
+            <button class="action-btn" style="background: rgba(255,78,80,0.2);" onclick="toggleFullscreen()">🖥️ Fullscreen</button>
+        </div>
     </header>
 
-    <div id="client-viewport">
-        <!-- Direct isolated CloudMoon Web Application framework pipeline for Roblox app deployment -->
-        <iframe id="cloud-sandbox-frame" 
+    <div id="core-viewport">
+        <!-- Starts directly on CloudMoon Roblox with sandbox protection -->
+        <iframe id="game-engine-frame" 
                 src="https://cloudmoonapp.com" 
                 sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
                 allow="autoplay; gamepad; fullscreen;">
@@ -47,16 +53,33 @@
     </div>
 
     <script>
-        // Enforce the custom tab label window strictly to 'klas'
         document.title = "klas";
         setInterval(() => { if (document.title !== "klas") document.title = "klas"; }, 150);
 
-        // Native Fullscreen Engine API
-        function goFullscreen() {
-            const viewport = document.getElementById('client-viewport');
-            if (viewport) {
+        function switchStream(gameKey) {
+            const frame = document.getElementById('game-engine-frame');
+            const buttons = document.querySelectorAll('.btn-container .action-btn');
+            buttons.forEach(btn => btn.classList.remove('active-game'));
+
+            if (!frame) return;
+
+            if (gameKey === 'roblox') {
+                frame.src = "https://cloudmoonapp.com";
+                document.getElementById('btn-roblox').classList.add('active-game');
+            } else if (gameKey === 'retro') {
+                frame.src = "https://retrogames.cc";
+                document.getElementById('btn-retro').classList.add('active-game');
+            } else if (gameKey === 'slope') {
+                frame.src = "https://kbhgames.com";
+                document.getElementById('btn-slope').classList.add('active-game');
+            }
+        }
+
+        function toggleFullscreen() {
+            const targetContainer = document.getElementById('core-viewport');
+            if (targetContainer) {
                 if (!document.fullscreenElement) {
-                    viewport.requestFullscreen().catch(err => console.warn(err.message));
+                    targetContainer.requestFullscreen().catch(err => console.warn(err.message));
                 } else {
                     document.exitFullscreen();
                 }
