@@ -14,76 +14,102 @@
         body, html {
             width: 100%;
             height: 100%;
-            background-color: #0c0c0f;
-            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #0b0b0e;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        #nav-bar {
+        /* Sleek Modern Navigation Panel Bar */
+        #ui-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(15, 15, 20, 0.8);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 52px;
+            background: rgba(14, 14, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 24px;
-            z-index: 99999;
+            padding: 0 24px;
+            z-index: 999999;
         }
-        .title {
+        .logo-text {
             color: #ffffff;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
+        /* Custom Modern Action Buttons */
         .modern-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             color: #ffffff;
-            padding: 8px 16px;
+            padding: 8px 18px;
             font-size: 13px;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 7px;
             cursor: pointer;
-            transition: 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .modern-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
         }
+        .modern-btn:active {
+            transform: translateY(0);
+        }
+        /* Container forcing the cloud sandbox game to match layout boundaries */
         iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 52px);
             border: none;
-            padding-top: 50px;
+            margin-top: 52px;
+            background: #000000;
         }
     </style>
 </head>
 <body>
 
-    <div id="nav-bar">
-        <div class="title">klas client</div>
-        <button class="modern-btn" onclick="makeFullscreen()">🖥️ Fullscreen Game</button>
+    <div id="ui-header">
+        <div class="logo-text">klas client v2.0</div>
+        <button class="modern-btn" onclick="triggerFullscreen()">🖥️ Fullscreen Game</button>
     </div>
 
-    <!-- Proxy Frame that runs CloudMoon inside your GitHub link -->
-    <iframe id="game-frame" src="https://cloudmoonapp.com" allow="autoplay; gamepad; fullscreen;"></iframe>
+    <!-- Sandboxed CloudMoon frame removes cross-origin script loops and standard ad overlays -->
+    <iframe id="cloudmoon-frame" 
+            src="https://web.cloudmoonapp.com/" 
+            sandbox="allow-apps allow-autoplay allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+            allow="autoplay; gamepad; fullscreen;">
+    </iframe>
 
     <script>
-        // Forces browser tab to say klas for anyone who opens it
+        // Enforce the tab name to 'klas' loops
         document.title = "klas";
         setInterval(() => {
             if (document.title !== "klas") document.title = "klas";
-        }, 250);
+        }, 200);
 
-        function makeFullscreen() {
-            const frame = document.getElementById('game-frame');
-            if (frame.requestFullscreen) {
-                frame.requestFullscreen();
+        // Native Fullscreen Engine API
+        function triggerFullscreen() {
+            const gameFrame = document.getElementById('cloudmoon-frame');
+            if (gameFrame) {
+                if (!document.fullscreenElement) {
+                    gameFrame.requestFullscreen().catch(err => {
+                        console.error("Fullscreen failed: " + err.message);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
             }
         }
 
-        // Prevent accidental page closes or tab redirection kicks
-        window.onbeforeunload = function() { return true; };
+        // Prevent unwanted script redirects out of your client workspace
+        window.onbeforeunload = function() {
+            return "Do you want to exit your gaming panel session?";
+        };
     </script>
 </body>
 </html>
