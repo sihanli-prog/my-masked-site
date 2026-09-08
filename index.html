@@ -1,36 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 1. Your Custom Title -->
-    <title>junior chloud</title>
-    
-    <!-- 2. Your Custom Photo/Icon (Replace URL with your cloud photo link) -->
-    <link rel="icon" type="image/png" href="https://picsum.photos">
-    
-    <style>
-        /* This forces the game to take up the full browser window seamlessly */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
-</head>
-<body>
+// ==UserScript==
+// @name         Junior Cloud Mask
+// @namespace    https://github.com/
+// @version      1.1
+// @description  Forces CrazyGames title and logo to change to Junior Cloud
+// @author       You
+// @match        *://*://*
+// @run-at       document-start
+// @grant        none
+// ==/UserScript==
 
-    <!-- 3. The frame embedding CrazyGames -->
-    <iframe src="https://crazygames.com"></iframe>
+(function() {
+    'use strict';
 
-</body>
-</html>
+    const newTitle = "junior chloud";
+    const newIconUrl = "https://icons8.com";
+
+    // Immediate injection
+    document.title = newTitle;
+
+    function applyMask() {
+        document.title = newTitle;
+        
+        // Update Favicon Link
+        let link = document.querySelector("link[rel*='icon']");
+        if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+        }
+        link.href = newIconUrl;
+    }
+
+    // Watch the tab constantly for title changes
+    const observer = new MutationObserver(() => {
+        if (document.title !== newTitle) {
+            document.title = newTitle;
+        }
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    // Run mask changes as the page elements pop in
+    window.addEventListener('DOMContentLoaded', applyMask);
+    window.addEventListener('load', applyMask);
+    setInterval(applyMask, 500);
+
+})();
