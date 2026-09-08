@@ -1,58 +1,36 @@
-// ==UserScript==
-// @name         CrazyGames to Junior Cloud Transformer
-// @namespace    https://github.com/
-// @version      1.0
-// @description  Changes CrazyGames title and logo to Junior Cloud
-// @author       You
-// @match        *://*://*
-// @run-at       document-start
-// @grant        none
-// ==/UserScript==
-
-(function() {
-    'use strict';
-
-    // 1. Change the Browser Tab Title
-    const newTitle = "junior chloud";
-    document.title = newTitle;
-
-    // Keep correcting the title if the website tries to change it back dynamically
-    const titleObserver = new MutationObserver(() => {
-        if (document.title !== newTitle) {
-            document.title = newTitle;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 1. Your Custom Title -->
+    <title>junior chloud</title>
+    
+    <!-- 2. Your Custom Photo/Icon (Replace URL with your cloud photo link) -->
+    <link rel="icon" type="image/png" href="https://picsum.photos">
+    
+    <style>
+        /* This forces the game to take up the full browser window seamlessly */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
         }
-    });
-    titleObserver.observe(document.querySelector('title') || document.documentElement, {
-        subtree: true,
-        childList: true
-    });
-
-    // 2. Change the Browser Tab Icon (Photo/Favicon)
-    // Replace the URL inside the quotes with your actual logo image link
-    const newIconUrl = "https://picsum.photos"; 
-
-    function changeFavicon(src) {
-        let link = document.querySelector("link[rel*='icon']");
-        if (!link) {
-            link = document.createElement('link');
-            link.rel = 'icon';
-            document.head.appendChild(link);
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        link.href = src;
-    }
+    </style>
+</head>
+<body>
 
-    // Run when the page loads
-    window.addEventListener('DOMContentLoaded', () => {
-        changeFavicon(newIconUrl);
-        
-        // 3. Optional: Replace header text or logos inside the page if they load
-        setInterval(() => {
-            // Target common header images or logos on CrazyGames to replace them
-            const logos = document.querySelectorAll('img[alt*="CrazyGames"], a[href="/"] img');
-            logos.forEach(img => {
-                img.src = newIconUrl;
-            });
-        }, 1000);
-    });
+    <!-- 3. The frame embedding CrazyGames -->
+    <iframe src="https://crazygames.com"></iframe>
 
-})();
+</body>
+</html>
