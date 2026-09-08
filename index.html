@@ -3,59 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>junior chloud</title>
+    
+    <!-- This sets your precise title and cloud logo -->
+    <title>junior cloud</title>
     <link rel="icon" type="image/png" href="https://icons8.com">
+    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
-            padding-top: 100px;
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #111;
         }
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #008cba;
-            color: white;
+        #game-frame {
+            width: 100%;
+            height: 100%;
             border: none;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Junior Cloud Dashboard</h1>
-    <p>Click below to launch the network portal.</p>
-    <button onclick="launchGame()">Launch Portal</button>
+    <!-- Using a public proxy URL to bypass connection refusal -->
+    <iframe id="game-frame" src="https://allorigins.win"></iframe>
 
     <script>
-    function launchGame() {
-        // This opens a brand new window
-        var win = window.open('about:blank', '_blank');
-        
-        // This builds the hidden embedding code dynamically inside that window
-        var html = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>junior chloud</title>
-                <link rel="icon" type="image/png" href="https://icons8.com">
-                <style>
-                    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-                    embed { width: 100%; height: 100%; border: none; }
-                </style>
-            </head>
-            <body>
-                <!-- We use embed instead of iframe to sneak past X-Frame blocks -->
-                <embed src="https://crazygames.com"></embed>
-            </body>
-            </html>
-        `;
-        
-        win.document.write(html);
-        win.document.close();
-    }
+        // Double security: Constantly force the title to stay "junior cloud"
+        setInterval(() => {
+            if (document.title !== "junior cloud") {
+                document.title = "junior cloud";
+            }
+        }, 200);
     </script>
 
 </body>
