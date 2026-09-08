@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- This sets your precise title and cloud logo -->
-    <title>junior cloud</title>
+    <!-- Tab title updated to exactly: taaljacht -->
+    <title>taaljacht</title>
+    
+    <!-- School platform styled favicon icon -->
     <link rel="icon" type="image/png" href="https://icons8.com">
     
     <style>
@@ -17,7 +19,7 @@
             overflow: hidden;
             background-color: #111;
         }
-        #game-frame {
+        iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -26,14 +28,14 @@
 </head>
 <body>
 
-    <!-- Using a public proxy URL to bypass connection refusal -->
-    <iframe id="game-frame" src="https://allorigins.win"></iframe>
+    <!-- This pulls Poki safely inside the page layer -->
+    <iframe src="https://allorigins.win"></iframe>
 
     <script>
-        // Double security: Constantly force the title to stay "junior cloud"
+        // Locks the tab title to "taaljacht" to bypass teachers glancing at tabs
         setInterval(() => {
-            if (document.title !== "junior cloud") {
-                document.title = "junior cloud";
+            if (document.title !== "taaljacht") {
+                document.title = "taaljacht";
             }
         }, 200);
     </script>
