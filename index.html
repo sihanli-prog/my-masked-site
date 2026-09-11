@@ -1,438 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Junior Cloud Games</title>
-
-  <style>
-    :root {
-      --blue: #2563eb;
-      --purple: #7c3aed;
-      --dark: #172033;
-      --gray: #64748b;
-      --light: #f1f5f9;
-      --white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      background: var(--light);
-      color: var(--dark);
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 7%;
-      color: white;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      box-shadow: 0 3px 12px #0003;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .brand img {
-      width: 48px;
-      height: 48px;
-      border: 3px solid white;
-      border-radius: 50%;
-      object-fit: cover;
-      background: white;
-    }
-
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-
-    nav a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    .hero {
-      padding: 70px 20px;
-      text-align: center;
-      background: white;
-    }
-
-    .hero h1 {
-      margin-bottom: 12px;
-      color: var(--blue);
-      font-size: clamp(32px, 6vw, 52px);
-    }
-
-    .hero p {
-      margin-bottom: 25px;
-      color: var(--gray);
-      font-size: 18px;
-    }
-
-    .search-box {
-      width: min(500px, 90%);
-      padding: 15px 20px;
-      border: 2px solid #cbd5e1;
-      border-radius: 30px;
-      outline: none;
-      font-size: 16px;
-    }
-
-    .search-box:focus {
-      border-color: var(--blue);
-    }
-
-    .games-section {
-      max-width: 1250px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-
-    .section-title {
-      margin-bottom: 25px;
-      font-size: 30px;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-    }
-
-    .game-card {
-      overflow: hidden;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 4px 14px #00000018;
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-
-    .game-card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 10px 25px #0000002b;
-    }
-
-    .game-card img {
-      display: block;
-      width: 100%;
-      height: 155px;
-      object-fit: cover;
-    }
-
-    .game-info {
-      padding: 17px;
-    }
-
-    .game-info h3 {
-      margin-bottom: 8px;
-      font-size: 20px;
-    }
-
-    .game-info p {
-      min-height: 40px;
-      margin-bottom: 15px;
-      color: var(--gray);
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .play-button {
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 8px;
-      color: white;
-      background: var(--blue);
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .play-button:hover {
-      background: #1d4ed8;
-    }
-
-    .about {
-      padding: 45px 20px;
-      text-align: center;
-      color: white;
-      background: var(--dark);
-    }
-
-    .about h2 {
-      margin-bottom: 10px;
-    }
-
-    .about p {
-      color: #cbd5e1;
-    }
-
-    footer {
-      padding: 20px;
-      text-align: center;
-      color: white;
-      background: #0f172a;
-      font-size: 14px;
-    }
-
-    .no-results {
-      display: none;
-      padding: 30px;
-      text-align: center;
-      color: var(--gray);
-      font-size: 18px;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 12px 5%;
-      }
-
-      .brand {
-        font-size: 18px;
-      }
-
-      .brand img {
-        width: 40px;
-        height: 40px;
-      }
-
-      nav {
-        gap: 10px;
-        font-size: 14px;
-      }
-
-      .hero {
-        padding: 50px 15px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <div class="brand">
-      <!-- Upload your own image as junior-cloud.jpg -->
-      <img src="junior-cloud.jpg" alt="Junior Cloud logo" />
-      <span>Junior Cloud</span>
-    </div>
-
-    <nav>
-      <a href="#games">Games</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <h1>Junior Cloud Games</h1>
-      <p>Play fun games online and discover new adventures.</p>
-
-      <input
-        class="search-box"
-        id="searchBox"
-        type="search"
-        placeholder="Search games..."
-        aria-label="Search games"
-      />
-    </section>
-
-    <section class="games-section" id="games">
-      <h2 class="section-title">Featured Games</h2>
-
-      <div class="games-grid" id="gamesGrid">
-
-        <article class="game-card" data-name="space adventure">
-          <img
-            src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=800"
-            alt="Space Adventure"
-          />
-
-          <div class="game-info">
-            <h3>Space Adventure</h3>
-            <p>Explore space and avoid dangerous asteroids.</p>
-
-            <!-- Change this link to your own game or an official game page -->
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-        <article class="game-card" data-name="pixel racer">
-          <img
-            src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800"
-            alt="Pixel Racer"
-          />
-
-          <div class="game-info">
-            <h3>Pixel Racer</h3>
-            <p>Race fast cars and try to finish first.</p>
-
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-        <article class="game-card" data-name="soccer stars">
-          <img
-            src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800"
-            alt="Soccer Stars"
-          />
-
-          <div class="game-info">
-            <h3>Soccer Stars</h3>
-            <p>Score goals and become the soccer champion.</p>
-
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-        <article class="game-card" data-name="cloud puzzle">
-          <img
-            src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=800"
-            alt="Cloud Puzzle"
-          />
-
-          <div class="game-info">
-            <h3>Cloud Puzzle</h3>
-            <p>Match colorful clouds and beat the clock.</p>
-
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-        <article class="game-card" data-name="jungle runner">
-          <img
-            src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800"
-            alt="Jungle Runner"
-          />
-
-          <div class="game-info">
-            <h3>Jungle Runner</h3>
-            <p>Run through the jungle and collect coins.</p>
-
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-        <article class="game-card" data-name="monster battle">
-          <img
-            src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800"
-            alt="Monster Battle"
-          />
-
-          <div class="game-info">
-            <h3>Monster Battle</h3>
-            <p>Choose your hero and battle powerful monsters.</p>
-
-            <a
-              class="play-button"
-              href="https://poki.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Play
-            </a>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="no-results" id="noResults">
-        No games found.
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <h2>About Junior Cloud</h2>
-      <p>
-        Junior Cloud is a fun game website made for discovering exciting games.
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    © 2026 Junior Cloud Games
-  </footer>
-
-  <script>
-    const searchBox = document.getElementById("searchBox");
-    const gameCards = document.querySelectorAll(".game-card");
-    const noResults = document.getElementById("noResults");
-
-    searchBox.addEventListener("input", function () {
-      const searchTerm = searchBox.value.toLowerCase().trim();
-      let gamesFound = 0;
-
-      gameCards.forEach(function (card) {
-        const gameName = card.dataset.name.toLowerCase();
-
-        if (gameName.includes(searchTerm)) {
-          card.style.display = "block";
-          gamesFound++;
-        } else {
-          card.style.display = "none";
-        }
-      });
-
-      noResults.style.display = gamesFound === 0 ? "block" : "none";
+/**
+ * Project Name: Junior Cloud
+ * Description: A Cloudflare Worker script to frame and proxy CloudMoon 
+ *              for smooth cloud gaming in the browser.
+ */
+
+const TARGET_URL = "https://web.cloudmoonapp.com/"; // Official CloudMoon Web App
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  // 1. If hitting the root or base paths, serve the clean HTML frame
+  if (url.pathname === "/" || url.pathname === "/index.html") {
+    const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Junior Cloud</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body, html {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: #000;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            }
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Embeds CloudMoon dynamically via the proxy architecture -->
+        <iframe src="/_proxy_/" allow="autoplay; gamepad; fullscreen; keyboard"></iframe>
+    </body>
+    </html>
+    `;
+    return new Response(html, {
+      headers: { "Content-Type": "text/html;charset=UTF-8" },
     });
-  </script>
+  }
 
-</body>
-</html>
+  // 2. Proxy handler to bypass restrictive frame options and load assets safely
+  if (url.pathname.startsWith("/_proxy_/")) {
+    const targetPath = url.pathname.replace("/_proxy_/", "");
+    const destinationUrl = new URL(targetPath, TARGET_URL);
+    destinationUrl.search = url.search;
+
+    // Duplicate the request parameters
+    const modifiedRequest = new Request(destinationUrl.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+      redirect: "follow"
+    });
+
+    try {
+      const response = await fetch(modifiedRequest);
+      
+      // Strip out headers that break framing or cross-origin features
+      const newHeaders = new Headers(response.headers);
+      newHeaders.delete("X-Frame-Options");
+      newHeaders.delete("Content-Security-Policy");
+      newHeaders.set("Access-Control-Allow-Origin", "*");
+
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders,
+      });
+    } catch (err) {
+      return new Response("Error connecting to Junior Cloud proxy gateway.", { status: 502 });
+    }
+  }
+
+  // 3. Fallback: Directly forward other structural resource assets through the pipeline
+  const assetUrl = new URL(url.pathname, TARGET_URL);
+  assetUrl.search = url.search;
+  return fetch(new Request(assetUrl.toString(), request));
+}
+
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request));
+});
